@@ -4,7 +4,7 @@ use std::io::BufReader;
 use std::path::Path;
 use std::error::Error;
 use std::collections::BTreeMap;
-use chrono::{DateTime, Local, Utc, Datelike, Timelike};
+use chrono::{DateTime, Utc, Datelike, Timelike};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Pharmacy {

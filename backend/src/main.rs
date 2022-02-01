@@ -1,9 +1,10 @@
 mod database;
 
 use database::Db;
-use actix_web::{web, App, HttpRequest, HttpServer, Responder, web::{Data}, HttpResponse};
+use actix_web::{web, App, HttpRequest, HttpServer, HttpResponse};
 use chrono::prelude::*;
-use std::sync::{Arc, RwLock};
+use std::sync::RwLock;
+use actix_cors::Cors;
 
 async fn pharmacy(req: HttpRequest) -> HttpResponse {
     let timestamp = req.match_info().get("timestamp").map(str::to_string).unwrap_or(Utc::now().to_rfc3339());
@@ -26,15 +27,23 @@ async fn main() -> std::io::Result<()> {
     let db = RwLock::new(db);
     let db = actix_web::web::Data::new(db);
 
-    HttpServer::new(move || {
+    if let Err(e) = HttpServer::new(move || {
+        let cors = Cors::default()
+            .allowed_origin("http://localhost:3000")
+            .allowed_origin("https://apteka-strzelin.pl")
+            .allowed_methods(vec!["GET"])
+            .max_age(3600);
         App::new()
+            .wrap(cors)
             .app_data(db.clone())
             .route("/pharmacy", web::get().to(pharmacy))
             .route("/pharmacy/{timestamp}", web::get().to(pharmacy))
     })
-    .bind(("127.0.0.1", 8080))?
-    .run()
-    .await;
+        .bind(("0.0.0.0", 8081))?
+        .run()
+        .await {
+        println!("Error running service: {:?}", e);
+    }
 
     Ok(())
 }

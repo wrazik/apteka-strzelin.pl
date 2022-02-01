@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 
+import axiosBase from "axios";
+
+export const axios = axiosBase.create({
+  baseURL: "http://localhost:8081",
+  timeout: 5000,
+});
+
+interface Pharmacy {
+    name: String,
+    address: String,
+    phone: String,
+}
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [data, setData] = useState<Pharmacy>({name: "", address: "", phone: ""});
+
+    useEffect(() => {
+        const fetch_pharmacy = async()  => {
+            const pharmacy = await axios.get<Pharmacy>('/pharmacy');
+            setData(pharmacy.data);
+        };
+        fetch_pharmacy();
+    }, []);
+
+    return (
+        <div className="current-pharmacy">
+            <div className="welcome-msg"> W tym tygodniu dyżur pełni: </div>
+            <div className="pharmacy-name"> {data.name} </div>
+            <div className="pharmacy-address"> {data.address} </div>
+            <div className="pharmacy-phone"> {data.phone} </div>
+        </div>
+    );
 }
 
 export default App;
