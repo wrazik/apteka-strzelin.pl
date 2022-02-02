@@ -1,8 +1,9 @@
 .current-pharmacy {
     background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
-    margin: 4rem 8rem;
-    padding: 2rem 3rem;
-    font-size: 3rem;
+    margin: 1rem;
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 2rem;
     font-weight: bold;
     display: grid;
     place-items: center;
