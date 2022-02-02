@@ -32,7 +32,7 @@ function App() {
         <div className="current-pharmacy">
             <div className="welcome-msg"> Dyżur pełni: </div>
             {isLoading ? (
-                <PropagateLoader color="black" size={10}/>
+                <PropagateLoader color="#e73c7e" size={10}/>
             ): (
                 <React.Fragment>
                     <div className="pharmacy-name"> {data.name} </div>
