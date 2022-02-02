@@ -1,0 +1,14 @@
+.current-pharmacy {
+    background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
+    margin: 4rem 8rem;
+    padding: 2rem 3rem;
+    font-size: 3rem;
+    font-weight: bold;
+    display: grid;
+    place-items: center;
+    position: center;
+    -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+    border-radius: 2rem;
+}

@@ -4,7 +4,7 @@ import './App.css';
 import axiosBase from "axios";
 
 export const axios = axiosBase.create({
-  baseURL: "http://localhost:8081",
+  baseURL: process.env.REACT_APP_BACKEND,
   timeout: 5000,
 });
 
@@ -27,7 +27,7 @@ function App() {
 
     return (
         <div className="current-pharmacy">
-            <div className="welcome-msg"> W tym tygodniu dyżur pełni: </div>
+            <div className="welcome-msg"> Dyżur pełni: </div>
             <div className="pharmacy-name"> {data.name} </div>
             <div className="pharmacy-address"> {data.address} </div>
             <div className="pharmacy-phone"> {data.phone} </div>

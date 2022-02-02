@@ -1,10 +1,10 @@
-use serde::{Serialize, Deserialize};
+use chrono::{DateTime, Datelike, Timelike, Utc};
+use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
+use std::error::Error;
 use std::fs::File;
 use std::io::BufReader;
 use std::path::Path;
-use std::error::Error;
-use std::collections::BTreeMap;
-use chrono::{DateTime, Utc, Datelike, Timelike};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Pharmacy {
@@ -27,7 +27,7 @@ impl Db {
         Ok(u)
     }
 
-    pub fn from_week(&self, week: &str) -> Option<Pharmacy>{
+    pub fn from_week(&self, week: &str) -> Option<Pharmacy> {
         let pharmacy_nb = self.on_call.get(week)?;
         self.pharmacies.get(&pharmacy_nb.to_string()).cloned()
     }
@@ -42,7 +42,7 @@ impl Db {
         let current_week = timestamp.iso_week().week();
         if chrono::Weekday::Mon == timestamp.weekday() {
             if timestamp.time().hour() < 8 {
-                return current_week - 1
+                return current_week - 1;
             }
         }
         current_week
@@ -52,7 +52,7 @@ impl Db {
 #[cfg(test)]
 mod test {
     use super::*;
-    use chrono::{Utc, TimeZone};
+    use chrono::{TimeZone, Utc};
 
     #[test]
     fn test_wednesday_midnight_12week() {
@@ -89,4 +89,3 @@ mod test {
         assert_eq!(4, Db::get_week(datetime));
     }
 }
-
