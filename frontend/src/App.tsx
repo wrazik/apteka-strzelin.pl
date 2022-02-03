@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {PropagateLoader} from "react-spinners";
+import {Pharmacy, PharmacyCard} from "./PharmacyCard";
+import { css } from "@emotion/react";
 
 import axiosBase from "axios";
 
@@ -9,15 +11,17 @@ export const axios = axiosBase.create({
   timeout: 5000,
 });
 
-interface Pharmacy {
-    name: String,
-    address: String,
-    phone: String,
-}
-
 function App() {
     const [data, setData] = useState<Pharmacy>({name: "", address: "", phone: ""});
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    // Can be a string as well. Need to ensure each key-value pair ends with ;
+    const override = css`
+        display: grid;
+        align-items: center;
+        place-items: center;
+        height: 100vh;
+    `;
 
     useEffect(() => {
         const fetch_pharmacy = async()  => {
@@ -29,16 +33,11 @@ function App() {
     }, []);
 
     return (
-        <div className="current-pharmacy">
-            <div className="welcome-msg"> Dyżur pełni: </div>
+        <div id="pharmacy">
             {isLoading ? (
-                <PropagateLoader color="#e73c7e" size={10}/>
-            ): (
-                <React.Fragment>
-                    <div className="pharmacy-name"> {data.name} </div>
-                    <div className="pharmacy-address"> {data.address} </div>
-                    <div className="pharmacy-phone"> {data.phone} </div>
-                </React.Fragment>
+                <PropagateLoader color="#e73c7e" size={20} css={override}/>
+            ) : (
+                <PharmacyCard name={data.name} address={data.address} phone={data.phone} />
             )}
         </div>
     );

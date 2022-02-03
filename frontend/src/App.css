@@ -1,20 +1,19 @@
 .current-pharmacy {
     background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);
     opacity: 80%;
-    margin: 1rem;
     padding: 2rem 0;
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
     display: grid;
     place-items: center;
-    position: center;
+    max-width: 400px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
     -webkit-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     -moz-box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     border-radius: 0.1rem;
     min-height: 150px;
-}
-.loader {
-    margin-top: 50px;
 }
