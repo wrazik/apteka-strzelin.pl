@@ -37,3 +37,8 @@ footer {
 .email::after {
     content: attr(domain);
 }
+
+@font-face {
+    font-family: "Vertigo";
+    src: local("Vertigo"), url(./fonts/ArimaKoshi-Medium.woff) format("woff")
+}
