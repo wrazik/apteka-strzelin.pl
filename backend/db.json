@@ -1,7 +1,7 @@
 {
   "pharmacies": {
     "0": {
-      "name": "Pod Paprocią",
+      "name": "Apteka Pod Paprocią",
       "address": "Rynek 8",
       "phone": "71 392 06 65"
     },
@@ -11,22 +11,22 @@
       "phone": "71 392 43 77"
     },
     "2": {
-      "name": "Nova",
+      "name": "Apteka Nova",
       "address": "Grahama Bella 3",
       "phone": "71 392 01 57"
     },
     "3": {
-      "name": "Kalina",
+      "name": "Apteka Kalina",
       "address": "Bolka I Świdnickiego 8",
       "phone": "71 394 55 23"
     },
     "4": {
-      "name": "Pod Złotym Lwem",
+      "name": "Apteka Pod Złotym Lwem",
       "address": "Wolności 1",
       "phone": "71 392 38 78"
     },
     "5": {
-      "name": "Centrum Zdrowia",
+      "name": "Apteka Centrum Zdrowia",
       "address": "Dzierżoniowska 5/1A",
       "phone": "71 783 18 33"
     }
