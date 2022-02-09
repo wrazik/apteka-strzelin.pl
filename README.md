@@ -1,5 +1,5 @@
 # apteka-strzelin.pl
-Small application that shows which Pharmacy in Strzelin is currently on-call. Data came from official city documets. 
+Small application that shows which Pharmacy in Strzelin is currently on-call. Data came from official city documents. 
 
 Frontend part is made in React.
 
