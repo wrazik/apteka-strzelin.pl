@@ -12,7 +12,7 @@ async fn pharmacy(req: HttpRequest) -> HttpResponse {
         .match_info()
         .get("timestamp")
         .map(str::to_string)
-        .unwrap_or(Utc::now().to_rfc3339());
+        .unwrap_or_else(|| Utc::now().to_rfc3339());
     std::thread::sleep(std::time::Duration::from_secs(2));
     match chrono::DateTime::parse_from_rfc3339(&timestamp) {
         Ok(timestamp) => {

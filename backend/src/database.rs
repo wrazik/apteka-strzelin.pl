@@ -40,10 +40,8 @@ impl Db {
         use chrono_tz::Europe::Warsaw;
         let timestamp = timestamp.with_timezone(&Warsaw);
         let current_week = timestamp.iso_week().week();
-        if chrono::Weekday::Mon == timestamp.weekday() {
-            if timestamp.time().hour() < 8 {
-                return current_week - 1;
-            }
+        if chrono::Weekday::Mon == timestamp.weekday() && timestamp.time().hour() < 8 {
+            return current_week - 1;
         }
         current_week
     }
@@ -56,36 +54,31 @@ mod test {
 
     #[test]
     fn test_wednesday_midnight_12week() {
-        let db = Db::new("./db.json").expect("Cannot read the database");
-        let datetime = Utc.ymd(2022, 03, 23).and_hms(19, 0, 0);
+        let datetime = Utc.ymd(2022, 3, 23).and_hms(19, 0, 0);
         assert_eq!(12, Db::get_week(datetime));
     }
 
     #[test]
     fn test_sunday_midnight() {
-        let db = Db::new("./db.json").expect("Cannot read the database");
-        let datetime = Utc.ymd(2022, 01, 30).and_hms(0, 0, 0);
+        let datetime = Utc.ymd(2022, 1, 30).and_hms(0, 0, 0);
         assert_eq!(4, Db::get_week(datetime));
     }
 
     #[test]
     fn test_monday_midnight_should_return_previous() {
-        let db = Db::new("./db.json").expect("Cannot read the database");
-        let datetime = Utc.ymd(2022, 01, 31).and_hms(0, 0, 0);
+        let datetime = Utc.ymd(2022, 1, 31).and_hms(0, 0, 0);
         assert_eq!(4, Db::get_week(datetime));
     }
 
     #[test]
     fn test_tuesday_midnight_should_return_normal() {
-        let db = Db::new("./db.json").expect("Cannot read the database");
-        let datetime = Utc.ymd(2022, 02, 01).and_hms(0, 0, 0);
+        let datetime = Utc.ymd(2022, 2, 1).and_hms(0, 0, 0);
         assert_eq!(5, Db::get_week(datetime));
     }
 
     #[test]
     fn test_monday_before_eight_should_return_previous() {
-        let db = Db::new("./db.json").expect("Cannot read the database");
-        let datetime = Utc.ymd(2022, 01, 31).and_hms(4, 0, 0);
+        let datetime = Utc.ymd(2022, 1, 31).and_hms(4, 0, 0);
         assert_eq!(4, Db::get_week(datetime));
     }
 }
