@@ -13,6 +13,7 @@ async fn pharmacy(req: HttpRequest) -> HttpResponse {
         .get("timestamp")
         .map(str::to_string)
         .unwrap_or(Utc::now().to_rfc3339());
+    std::thread::sleep(std::time::Duration::from_secs(2));
     match chrono::DateTime::parse_from_rfc3339(&timestamp) {
         Ok(timestamp) => {
             let db = req
@@ -41,6 +42,7 @@ async fn main() -> std::io::Result<()> {
     if let Err(e) = HttpServer::new(move || {
         let cors = Cors::default()
             .allowed_origin("https://apteka-strzelin.pl")
+            .allowed_origin("https://www.apteka-strzelin.pl")
             .allowed_methods(vec!["GET"])
             .max_age(3600);
         App::new()
