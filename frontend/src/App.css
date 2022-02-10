@@ -17,3 +17,6 @@
     border-radius: 0.1rem;
     min-height: 150px;
 }
+h1 {
+    font-size: smaller;
+}

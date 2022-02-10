@@ -36,10 +36,12 @@ export function PharmacyCard(props: Pharmacy) {
                 <CardMedia
                     component="img"
                     image={name_to_img[props.name]}
+                    title={"Aktualnie dyżur pełni " + props.name}
+                    alt={"Aktualnie dyżurująca apteka w Strzelinie to " + props.name}
                 />
                 <CardContent>
                     <Typography variant="body2" color="red">
-                        Dyżur
+                        <h1>Dyżur w Strzelinie pełni</h1>
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
                         {props.name}
