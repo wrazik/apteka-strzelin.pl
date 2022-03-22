@@ -41,7 +41,7 @@ export function PharmacyCard(props: Pharmacy) {
                 />
                 <CardContent>
                     <Typography variant="body2" color="red">
-                        <h1>Dyżur w Strzelinie pełni</h1>
+                        <h1>Dyżur w Strzelinie pełni /  Дежурить аптека </h1>
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
                         {props.name}
