@@ -28,6 +28,11 @@
     "5": {
       "name": "Apteka Centrum Zdrowia",
       "address": "Dzierżoniowska 5/1A",
+      "phone": "71 321 00 55"
+    },
+    "6": {
+      "name": "Apteka Pod Złotym Strzelcem",
+      "address": "Dzierżoniowska 16C",
       "phone": "71 783 18 33"
     }
   },
@@ -43,7 +48,7 @@
     "9": 0,
     "10": 5,
     "11": 2,
-    "12": 4,
+    "12": 6,
     "13": 0,
     "14": 1,
     "15": 3,

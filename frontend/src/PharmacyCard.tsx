@@ -19,7 +19,8 @@ const name_to_img: Record<string, string> = {
     "Apteka Nova": images.nova,
     "Apteka Kalina": images.kalina,
     "Apteka Pod Złotym Lwem": images.pod_zlotym_lwem,
-    "Apteka Centrum Zdrowia": images.centrum_zdrowia
+    "Apteka Centrum Zdrowia": images.centrum_zdrowia,
+    "Apteka Pod Złotym Strzelcem": images.pod_zlotym_strzelcem,
 }
 
 const theme = createTheme({

@@ -4,6 +4,7 @@ import centrum_zdrowia from "./centrum_zdrowia.jpg"
 import kalina from "./kalina.jpg"
 import nova from "./nova.jpg"
 import pod_zlotym_lwem from "./pod_zlotym_lwem.jpg"
+import pod_zlotym_strzelcem from "./pod_zlotym_strzelcem.jpg"
 
 export default {
     pod_paprocia,
@@ -11,5 +12,6 @@ export default {
     centrum_zdrowia,
     kalina,
     nova,
-    pod_zlotym_lwem
+    pod_zlotym_lwem,
+    pod_zlotym_strzelcem
 }
