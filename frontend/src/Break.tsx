@@ -32,7 +32,7 @@ export function Break() {
                         Przerwa techniczna!
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
-                        Niestety, Gmina Strzelin zmieniła sposób dyżurowania aptek. Obecnie, rozpisany jest on na konkretne dni. Ta strona bazowała na podziale tygodniowym, stąd potrzebuję czasu na dostosowanie.
+                        Niestety, Gmina Strzelin zmieniła sposób dyżurowania aptek. Obecnie rozpisany jest on na konkretne dni. Ta strona bazowała na podziale tygodniowym, stąd potrzebuję czasu na dostosowanie.
                         Proszę o cierpliwość!
 
                         Najbliższe dyżury:
