@@ -5,6 +5,7 @@ import kalina from "./kalina.jpg"
 import nova from "./nova.jpg"
 import pod_zlotym_lwem from "./pod_zlotym_lwem.jpg"
 import pod_zlotym_strzelcem from "./pod_zlotym_strzelcem.jpg"
+import maintanance_break from "./coding.gif"
 
 export default {
     pod_paprocia,
@@ -13,5 +14,6 @@ export default {
     kalina,
     nova,
     pod_zlotym_lwem,
-    pod_zlotym_strzelcem
+    pod_zlotym_strzelcem,
+    maintanance_break
 }

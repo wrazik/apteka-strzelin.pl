@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {PropagateLoader} from "react-spinners";
 import {Pharmacy, PharmacyCard} from "./PharmacyCard";
+import {Break} from "./Break";
 import { css } from "@emotion/react";
 
 import axiosBase from "axios";
@@ -24,20 +25,23 @@ function App() {
     `;
 
     useEffect(() => {
-        const fetch_pharmacy = async()  => {
-            const pharmacy = await axios.get<Pharmacy>('/pharmacy');
-            setData(pharmacy.data);
-            setIsLoading(false);
-        };
-        fetch_pharmacy();
+        setIsLoading(false);
     }, []);
+//        const fetch_pharmacy = async()  => {
+//            const pharmacy = await axios.get<Pharmacy>('/pharmacy');
+//            setData(pharmacy.data);
+//            setIsLoading(false);
+//        };
+//        fetch_pharmacy();
+//    }, []);
 
     return (
         <div id="pharmacy">
             {isLoading ? (
                 <PropagateLoader color="#e73c7e" size={20} css={override}/>
             ) : (
-                <PharmacyCard name={data.name} address={data.address} phone={data.phone} />
+               // <PharmacyCard name={data.name} address={data.address} phone={data.phone} />
+                <Break></Break>
             )}
         </div>
     );
