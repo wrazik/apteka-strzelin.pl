@@ -25,23 +25,20 @@ function App() {
     `;
 
     useEffect(() => {
-        setIsLoading(false);
+        const fetch_pharmacy = async()  => {
+            const pharmacy = await axios.get<Pharmacy>('/pharmacy');
+            setData(pharmacy.data);
+            setIsLoading(false);
+        };
+        fetch_pharmacy();
     }, []);
-//        const fetch_pharmacy = async()  => {
-//            const pharmacy = await axios.get<Pharmacy>('/pharmacy');
-//            setData(pharmacy.data);
-//            setIsLoading(false);
-//        };
-//        fetch_pharmacy();
-//    }, []);
 
     return (
         <div id="pharmacy">
             {isLoading ? (
                 <PropagateLoader color="#e73c7e" size={20} css={override}/>
             ) : (
-               // <PharmacyCard name={data.name} address={data.address} phone={data.phone} />
-                <Break></Break>
+                <PharmacyCard name={data.name} address={data.address} phone={data.phone} />
             )}
         </div>
     );
