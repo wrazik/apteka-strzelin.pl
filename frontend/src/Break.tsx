@@ -21,8 +21,8 @@ export function Break() {
                 <CardMedia
                     component="img"
                     image={images.maintanance_break}
-                    title={"Przerwa techniczna, kodowanie w pełni "}
-                    alt={"Przerwa techniczna, kodowanie w pełni "}
+                    title={"takataktakatakatakatakatakatakatakataka"}
+                    alt={"Przerwa techniczna, kodowanie w pełni"}
                 />
                 <CardContent>
                     <Typography variant="body2" color="red">

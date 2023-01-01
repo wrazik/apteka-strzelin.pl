@@ -1,4 +1,4 @@
-use chrono::{DateTime, Datelike, Timelike, Utc};
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 use std::error::Error;
@@ -7,16 +7,59 @@ use std::io::BufReader;
 use std::path::Path;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Pharmacy {
-    name: String,
-    address: String,
-    phone: String,
+pub(crate) struct Pharmacy {
+    pub(crate) id: String,
+    pub(crate) name: String,
+    pub(crate) address: String,
+    pub(crate) phone: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Db {
-    pub pharmacies: BTreeMap<String, Pharmacy>,
-    pub on_call: BTreeMap<String, i32>,
+pub(crate) struct OnCallData {
+    pub(crate) id: String,
+    pub(crate) days: Vec<String>,
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub(crate) struct Db {
+    pub(crate) pharmacies: Vec<Pharmacy>,
+    pub(crate) on_call: Vec<OnCallData>,
+}
+
+#[derive(Debug)]
+pub(crate) struct Calendar {
+    pharmacies: Vec<Pharmacy>,
+    days: BTreeMap<NaiveDate, String>,
+}
+
+impl From<Db> for Calendar {
+    fn from(value: Db) -> Self {
+        let mut days = BTreeMap::new();
+        for i in value.on_call.iter() {
+            for day in &i.days {
+                let day = Calendar::string_to_date(day);
+                if let Some(day) = day {
+                    days.insert(day, i.id.clone());
+                }
+            }
+        }
+        Calendar {
+            pharmacies: value.pharmacies,
+            days,
+        }
+    }
+}
+
+impl Calendar {
+    fn string_to_date(date: &str) -> Option<NaiveDate> {
+        let date = date.to_owned() + ".2023";
+        NaiveDate::parse_from_str(&date, "%d.%m.%Y").ok()
+    }
+
+    pub(crate) fn get_pharmacy(&self, date: NaiveDate) -> Option<Pharmacy> {
+        let pharmacy = self.days.get(&date)?;
+        self.pharmacies.iter().find(|x| x.id == *pharmacy).cloned()
+    }
 }
 
 impl Db {
@@ -26,59 +69,41 @@ impl Db {
         let u = serde_json::from_reader(reader)?;
         Ok(u)
     }
-
-    pub fn from_week(&self, week: &str) -> Option<Pharmacy> {
-        let pharmacy_nb = self.on_call.get(week)?;
-        self.pharmacies.get(&pharmacy_nb.to_string()).cloned()
-    }
-
-    pub fn from_datetime(&self, timestamp: DateTime<Utc>) -> Option<Pharmacy> {
-        self.from_week(&Db::get_week(timestamp).to_string())
-    }
-
-    fn get_week(timestamp: DateTime<Utc>) -> u32 {
-        use chrono_tz::Europe::Warsaw;
-        let timestamp = timestamp.with_timezone(&Warsaw);
-        let current_week = timestamp.iso_week().week();
-        if chrono::Weekday::Mon == timestamp.weekday() && timestamp.time().hour() < 8 {
-            return current_week - 1;
-        }
-        current_week
-    }
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
-    use chrono::{TimeZone, Utc};
 
     #[test]
-    fn test_wednesday_midnight_12week() {
-        let datetime = Utc.ymd(2022, 3, 23).and_hms(19, 0, 0);
-        assert_eq!(12, Db::get_week(datetime));
+    fn test_parsing_correct_date() {
+        assert_eq!(
+            Calendar::string_to_date("07.01").unwrap(),
+            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+        );
+        assert_eq!(
+            Calendar::string_to_date("7.1").unwrap(),
+            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+        );
+        assert_eq!(
+            Calendar::string_to_date("7.01").unwrap(),
+            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+        );
+        assert_eq!(
+            Calendar::string_to_date("7.01").unwrap(),
+            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+        );
     }
-
     #[test]
-    fn test_sunday_midnight() {
-        let datetime = Utc.ymd(2022, 1, 30).and_hms(0, 0, 0);
-        assert_eq!(4, Db::get_week(datetime));
-    }
+    fn test_parsing_incorrect_date() {
+        let correct = vec!["7.13", "piecgwiazdektrzygwiazdki", "29.2", "21.37"];
+        let converted = correct
+            .iter()
+            .map(|x| Calendar::string_to_date(x))
+            .collect::<Vec<Option<NaiveDate>>>();
 
-    #[test]
-    fn test_monday_midnight_should_return_previous() {
-        let datetime = Utc.ymd(2022, 1, 31).and_hms(0, 0, 0);
-        assert_eq!(4, Db::get_week(datetime));
-    }
-
-    #[test]
-    fn test_tuesday_midnight_should_return_normal() {
-        let datetime = Utc.ymd(2022, 2, 1).and_hms(0, 0, 0);
-        assert_eq!(5, Db::get_week(datetime));
-    }
-
-    #[test]
-    fn test_monday_before_eight_should_return_previous() {
-        let datetime = Utc.ymd(2022, 1, 31).and_hms(4, 0, 0);
-        assert_eq!(4, Db::get_week(datetime));
+        for date in converted {
+            assert_eq!(date, None);
+        }
     }
 }
