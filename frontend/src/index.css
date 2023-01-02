@@ -31,6 +31,20 @@ footer {
     right:0;
 }
 
+a:link {
+    text-decoration: none;
+    color: white;
+}
+a:visited {
+    text-decoration: none;
+    color: white;
+}
+a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+
 .email::before {
     content: attr(user) "\0040";
 }

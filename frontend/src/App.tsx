@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {PropagateLoader} from "react-spinners";
-import {Pharmacy, PharmacyCard} from "./PharmacyCard";
-import {Break} from "./Break";
+import {PharmacyCardProps, PharmacyCard} from "./PharmacyCard";
 import { css } from "@emotion/react";
 
 import axiosBase from "axios";
@@ -13,7 +12,7 @@ export const axios = axiosBase.create({
 });
 
 function App() {
-    const [data, setData] = useState<Pharmacy>({name: "", address: "", phone: ""});
+    const [data, setData] = useState<PharmacyCardProps>({name: "", address: "", phone: "", date: new Date()});
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     // Can be a string as well. Need to ensure each key-value pair ends with ;
@@ -26,7 +25,8 @@ function App() {
 
     useEffect(() => {
         const fetch_pharmacy = async()  => {
-            const pharmacy = await axios.get<Pharmacy>('/pharmacy');
+            const pharmacy = await axios.get<PharmacyCardProps>('/pharmacy');
+            pharmacy.data.date = new Date();
             setData(pharmacy.data);
             setIsLoading(false);
         };
@@ -38,7 +38,7 @@ function App() {
             {isLoading ? (
                 <PropagateLoader color="#e73c7e" size={20} css={override}/>
             ) : (
-                <PharmacyCard name={data.name} address={data.address} phone={data.phone} />
+                <PharmacyCard name={data.name} address={data.address} phone={data.phone} date={data.date}/>
             )}
         </div>
     );
