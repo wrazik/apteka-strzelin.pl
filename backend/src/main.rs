@@ -48,25 +48,26 @@ async fn main() -> std::io::Result<()> {
     let calendar = RwLock::new(calendar);
     let calendar = web::Data::new(calendar);
 
-    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
-    builder
-        .set_private_key_file("key.pem", SslFiletype::PEM)
-        .unwrap();
-    builder.set_certificate_chain_file("cert.pem").unwrap();
+//    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
+//    builder
+//        .set_private_key_file("key.pem", SslFiletype::PEM)
+//        .unwrap();
+//    builder.set_certificate_chain_file("cert.pem").unwrap();
 
     if let Err(e) = HttpServer::new(move || {
-        let cors = Cors::default()
-            .allowed_origin("https://apteka-strzelin.pl")
-            .allowed_origin("https://www.apteka-strzelin.pl")
-            .allowed_methods(vec!["GET"])
-            .max_age(3600);
+        let cors = Cors::permissive();
+//            .allowed_origin("https://apteka-strzelin.pl")
+//            .allowed_origin("https://www.apteka-strzelin.pl")
+//            .allowed_methods(vec!["GET"])
+//            .max_age(3600);
         App::new()
             .wrap(cors)
             .app_data(calendar.clone())
             .route("/pharmacy", web::get().to(pharmacy))
             .route("/pharmacy/{naive_date}", web::get().to(pharmacy))
     })
-    .bind_openssl("0.0.0.0:8081", builder)?
+//    .bind_openssl("0.0.0.0:8081", builder)?
+    .bind("0.0.0.0:8081")?
     .run()
     .await
     {

@@ -5,7 +5,11 @@ import CardMedia from '@mui/material/CardMedia';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
 import images from "./img/index";
-import {createTheme, ThemeProvider} from "@mui/material";
+import {Box, createTheme, IconButton, ThemeProvider} from "@mui/material";
+import ChevronLeft from '@mui/icons-material/ChevronLeft';
+import CalendarToday from '@mui/icons-material/CalendarToday';
+import ChevronRight from '@mui/icons-material/ChevronRight';
+
 
 interface PharmacyCardProps {
     name: string,
@@ -62,6 +66,7 @@ function generate_date_string(some_date: Date): string {
     return `${prefix}${some_date.getDate()} ${some_date.toLocaleString(locale, {month: "long"})} ${some_date.getFullYear()}`;
 }
 
+
 export function PharmacyCard(props: PharmacyCardProps) {
     return (
         <ThemeProvider theme={theme}>
@@ -88,6 +93,17 @@ export function PharmacyCard(props: PharmacyCardProps) {
                         {props.phone}
                     </Typography>
                 </CardContent>
+                <Box sx={{ display: 'flex', justifyContent: "space-between", pl: 1, pb: 1 }}>
+                    <IconButton aria-label="Dzień wcześniej">
+                        <ChevronLeft />
+                    </IconButton>
+                    <IconButton aria-label="Wybierz datę">
+                        <CalendarToday />
+                    </IconButton>
+                    <IconButton aria-label="Dzień Później">
+                        <ChevronRight />
+                    </IconButton>
+                </Box>
             </Card>
         </ThemeProvider>
     );
