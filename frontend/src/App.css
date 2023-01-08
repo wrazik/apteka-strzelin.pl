@@ -20,3 +20,8 @@
 h1 {
     font-size: smaller;
 }
+
+.disabled {
+    font-size: 0.5rem;
+    color: red!important;
+}

@@ -32,7 +32,7 @@ footer {
 }
 
 a:link {
-    text-decoration: none;
+    text-decoration: underline;
     color: white;
 }
 a:visited {

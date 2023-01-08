@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React  from 'react';
 import './App.css';
-import {PropagateLoader} from "react-spinners";
 import {PharmacyCardProps, PharmacyCard} from "./PharmacyCard";
-import { css } from "@emotion/react";
+import  {useLoaderData} from "react-router-dom";
 
-import axiosBase from "axios";
+import axiosBase, {AxiosResponse} from "axios";
 
 export const axios = axiosBase.create({
   baseURL: process.env.REACT_APP_BACKEND,
@@ -12,34 +11,11 @@ export const axios = axiosBase.create({
 });
 
 function App() {
-    const [data, setData] = useState<PharmacyCardProps>({name: "", address: "", phone: "", date: new Date()});
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-
-    // Can be a string as well. Need to ensure each key-value pair ends with ;
-    const override = css`
-        display: grid;
-        align-items: center;
-        place-items: center;
-        height: 100vh;
-    `;
-
-    useEffect(() => {
-        const fetch_pharmacy = async()  => {
-            const pharmacy = await axios.get<PharmacyCardProps>('/pharmacy');
-            pharmacy.data.date = new Date();
-            setData(pharmacy.data);
-            setIsLoading(false);
-        };
-        fetch_pharmacy();
-    }, []);
+    let { data: pharmacy } = useLoaderData() as AxiosResponse<PharmacyCardProps>;
 
     return (
         <div id="pharmacy">
-            {isLoading ? (
-                <PropagateLoader color="#e73c7e" size={20} css={override}/>
-            ) : (
-                <PharmacyCard name={data.name} address={data.address} phone={data.phone} date={data.date}/>
-            )}
+                <PharmacyCard name={pharmacy.name} address={pharmacy.address} phone={pharmacy.phone}/>
         </div>
     );
 }

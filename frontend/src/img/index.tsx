@@ -7,7 +7,7 @@ import pod_zlotym_lwem from "./pod_zlotym_lwem.jpg"
 import pod_zlotym_strzelcem from "./pod_zlotym_strzelcem.jpg"
 import maintanance_break from "./coding.gif"
 
-export default {
+const images = {
     pod_paprocia,
     inter_apteka,
     centrum_zdrowia,
@@ -17,3 +17,5 @@ export default {
     pod_zlotym_strzelcem,
     maintanance_break
 }
+
+export default images;
