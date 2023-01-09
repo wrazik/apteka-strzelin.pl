@@ -37,13 +37,11 @@ const name_to_img: Record<string, string> = {
 
 const theme = createTheme({
     typography: {
-        "fontFamily": "Vertigo",
-        "fontWeightBold": "bold"
+        "fontFamily": "Vertigo", "fontWeightBold": "bold"
     }
 })
 
 function generate_date_string(some_date: Date): string {
-    let prefix = "";
     let days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
     let months = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
 
@@ -51,22 +49,7 @@ function generate_date_string(some_date: Date): string {
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     let day = today.getDate();
-    if (year === some_date.getFullYear() &&
-        month === some_date.getMonth() + 1) {
-        const day_diff = day - some_date.getDate();
-        if (day_diff === 0) {
-            prefix = "Dzisiaj, ";
-        } else if (day_diff === -1) {
-            prefix = "Jutro, ";
-        } else if (day_diff === -2) {
-            prefix = "Pojutrze, ";
-        } else if (day_diff === 1) {
-            prefix = "Wczoraj, ";
-        } else if (day_diff === 2) {
-            prefix = "Przedwczoraj, ";
-        }
-        prefix = `${days[some_date.getDay()]}, `;
-    }
+    const prefix = `${days[some_date.getDay()]}, `;
 
     return `${prefix}${some_date.getDate()} ${months[some_date.getMonth()]} ${some_date.getFullYear()}`;
 }
@@ -79,129 +62,119 @@ function parse_date(date: string | undefined): Date {
 }
 
 function format_link_to_date(date: Date): string {
-    return `/date/${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    return `/date/${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 }
 
-function is_this_years_date(link_to_date: string) {
-    return link_to_date.includes("2023");
+function is_this_years_date(date: Date) {
+    return date.getFullYear() === 2023;
 }
 
 function NextArrow() {
-    return (
-        <IconButton aria-label="Później" size='small' >
+    return (<IconButton aria-label="Później" size='small'>
             <div id="day">Później</div>
             <ChevronRight/>
-        </IconButton>
-    );
+        </IconButton>);
 }
 
 function PreviousArrow() {
-    return (
-        <IconButton aria-label="Wcześniej" size='small'>
+    return (<IconButton aria-label="Wcześniej" size='small'>
             <ChevronLeft/>
             <div id="day">Wcześniej</div>
-        </IconButton>
-    );
+        </IconButton>);
 }
 
-function Next({link}: {link: string}) {
-    if (is_this_years_date(link)) {
-        return (
-            <div>
+function Next({date}: { date: Date }) {
+    const tomorrow = add(date, {days: 1});
+    const link = format_link_to_date(tomorrow);
+    if (is_this_years_date(tomorrow)) {
+        return (<div>
                 <Link to={link}>
                     <NextArrow/>
                 </Link>
-            </div>
-        );
-    }
-    else {
-        return (
-            <div className="disabled" >
+            </div>);
+    } else {
+        return (<div className="disabled">
                 <NextArrow/>
-            </div>
-        )
+            </div>)
     }
 }
 
-function Previous({link}: {link: string}) {
-    if (is_this_years_date(link)) {
-        return (
-            <div>
+function Previous({date}: { date: Date }) {
+    const yesterday = sub(date, {days: 1});
+    const link = format_link_to_date(yesterday);
+    if (is_this_years_date(yesterday)) {
+        return (<div>
                 <Link to={link}>
                     <PreviousArrow/>
                 </Link>
-            </div>
-        );
-    }
-    else {
-        return (
-            <div className="disabled" >
+            </div>);
+    } else {
+        return (<div className="disabled">
                 <PreviousArrow/>
-            </div>
-        )
+            </div>)
     }
 }
 
-function Today({date}: {date: Date}) {
+function Today({date, is_home_page}: { date: Date, is_home_page: boolean }) {
     if (isToday(date)) {
         return <></>
     }
-    return (
-        <Link to="/">
+    const link = format_link_to_date(new Date());
+    return (<Link to={link}>
             <IconButton aria-label="Dzisiaj" size="small">
                 <div id="day">Dzisiaj</div>
             </IconButton>
-        </Link>
-    )
+        </Link>)
 }
 
-function HeaderString({date}:  {date: Date}) {
+function HeaderString({date}: { date: Date }) {
     let message = "";
     const suffix = "dyżur w Strzelinie"
 
     if (isYesterday(date)) {
         message = `Wczoraj ${suffix} pełniła: `;
-    }
-    else if (isToday(date)) {
+    } else if (isToday(date)) {
         message = `Dzisiaj ${suffix} pełni: `;
-    }
-    else if (isTomorrow(date)) {
+    } else if (isTomorrow(date)) {
         message = `Jutro ${suffix} pełni: `;
-    }
-    else if(isPast(date)) {
+    } else if (isPast(date)) {
         message = `Tego dnia ${suffix} pełniła: `;
-    }
-    else {
+    } else {
         message = `Tego dnia ${suffix} będzie pełnić: `;
     }
 
 
-    return (
-        <h1> {message} </h1>
-    )
+    return (<h1> {message} </h1>)
 }
 
 export function PharmacyCard(props: PharmacyCardProps) {
-    let { date } = useParams();
-    const date_parsed = parse_date(date)
+    let {date} = useParams();
+    let is_home_page = true;
+    if (date) {
+        is_home_page = false;
+    }
+    let date_parsed = parse_date(date)
+
+    if (date_parsed.getHours() < 8 && is_home_page) {
+        date_parsed = sub(date_parsed, {days: 1})
+    }
 
     const previous = format_link_to_date(sub(date_parsed, {days: 1}));
     const next = format_link_to_date(add(date_parsed, {days: 1}));
 
-    return (
-        <ThemeProvider theme={theme}>
+    return (<ThemeProvider theme={theme}>
             <Card sx={{maxWidth: 400, boxShadow: 10, margin: "auto auto"}}>
                 <CardHeader subheader={generate_date_string(date_parsed)}
                 />
                 <CardMedia
                     component="img"
                     image={name_to_img[props.name]}
-                    title={"Aktualnie dyżur pełni " + props.name}
+                    title={"Aktualnie dyżur w Strzelinie pełni " + props.name}
                     alt={"Aktualnie dyżurująca apteka w Strzelinie to " + props.name}
                 />
                 <CardContent>
                     <Typography component={'span'} variant="body2" color="red">
-                        <HeaderString date={date_parsed} />
+                        <HeaderString date={date_parsed}/>
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
                         {props.name}
@@ -213,12 +186,11 @@ export function PharmacyCard(props: PharmacyCardProps) {
                         {props.phone}
                     </Typography>
                 </CardContent>
-                <Box sx={{ display: 'flex', justifyContent: "space-between", pl: 1, pb: 1 }}>
-                    <Previous link={previous} />
-                    <Today date={date_parsed}/>
-                    <Next link={next}/>
+                <Box sx={{display: 'flex', justifyContent: "space-between", pl: 1, pb: 1}}>
+                    <Previous date={date_parsed}/>
+                    <Today date={date_parsed} is_home_page={is_home_page}/>
+                    <Next date={date_parsed}/>
                 </Box>
             </Card>
-        </ThemeProvider>
-    );
+        </ThemeProvider>);
 }
