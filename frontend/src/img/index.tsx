@@ -6,6 +6,7 @@ import nova from "./nova.jpg"
 import pod_zlotym_lwem from "./pod_zlotym_lwem.jpg"
 import pod_zlotym_strzelcem from "./pod_zlotym_strzelcem.jpg"
 import maintanance_break from "./coding.gif"
+import error_404 from "./404.png"
 
 const images = {
     pod_paprocia,
@@ -15,7 +16,8 @@ const images = {
     nova,
     pod_zlotym_lwem,
     pod_zlotym_strzelcem,
-    maintanance_break
+    maintanance_break,
+    error_404
 }
 
 export default images;

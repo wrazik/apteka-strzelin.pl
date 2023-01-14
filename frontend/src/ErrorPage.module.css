@@ -1,0 +1,28 @@
+.error_page {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.error_image {
+    display: block;
+    max-width: 50%;
+    margin: auto;
+    padding: 1rem;
+
+}
+
+.text {
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px rgba(255, 255, 255, 0.34);
+    color: rgba(0, 0, 0, 0.74);
+    fill: currentColor;
+}
+
+.icon {
+    padding-top: 1rem;
+}

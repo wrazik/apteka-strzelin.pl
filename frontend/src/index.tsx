@@ -19,6 +19,7 @@ const router = createBrowserRouter([
     {
         path: "/date/:date",
         element: <App></App>,
+        errorElement: <ErrorPage />,
         loader: load_pharmacy
     },
 ]);
