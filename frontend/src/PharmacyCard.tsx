@@ -8,14 +8,23 @@ import images from "./img/index";
 import {Box, createTheme, IconButton, ThemeProvider} from "@mui/material";
 import ChevronLeft from '@mui/icons-material/ChevronLeft';
 import ChevronRight from '@mui/icons-material/ChevronRight';
+import CalendarMonth from "@mui/icons-material/CalendarMonth";
 import {Link, useParams} from "react-router-dom";
+import 'react-datepicker/dist/react-datepicker.css'
+import { useNavigate } from "react-router-dom";
+
 import parse from 'date-fns/parse'
 import sub from 'date-fns/sub'
 import add from 'date-fns/add'
 import isTomorrow from "date-fns/isTomorrow";
 import isYesterday from "date-fns/isYesterday";
 import isToday from "date-fns/isToday";
-import isPast from 'date-fns/isPast'
+import isPast from 'date-fns/isPast';
+import DatePicker, {registerLocale} from 'react-datepicker';
+import pl from "date-fns/locale/pl";
+import {useState} from "react";
+import styles from "./PharmacyCard.module.css"
+registerLocale("pl", pl);
 
 interface PharmacyCardProps {
     name: string,
@@ -67,7 +76,6 @@ function is_this_years_date(date: Date) {
 
 function NextArrow() {
     return (<IconButton aria-label="Później" size='small'>
-            <div id="day">Później</div>
             <ChevronRight/>
         </IconButton>);
 }
@@ -75,7 +83,6 @@ function NextArrow() {
 function PreviousArrow() {
     return (<IconButton aria-label="Wcześniej" size='small'>
             <ChevronLeft/>
-            <div id="day">Wcześniej</div>
         </IconButton>);
 }
 
@@ -111,16 +118,33 @@ function Previous({date}: { date: Date }) {
     }
 }
 
-function Today({date, is_home_page}: { date: Date, is_home_page: boolean }) {
-    if (isToday(date)) {
-        return <></>
-    }
-    const link = format_link_to_date(new Date());
-    return (<Link to={link}>
-            <IconButton aria-label="Dzisiaj" size="small">
-                <div id="day">Dzisiaj</div>
-            </IconButton>
-        </Link>)
+
+function Calendar({date}: { date: Date }) {
+    const navigate = useNavigate();
+
+    const [startDate, setStartDate] = useState(date);
+    return (
+        <label>
+                <CalendarMonth/>
+                <DatePicker
+                    todayButton="Dzisiaj"
+                    className={styles.calendar_input}
+                    locale="pl"
+                    selected={startDate}
+                    minDate={parse_date("2023-01-01")}
+                    maxDate={parse_date("2023-12-31")}
+                    shouldCloseOnSelect={true}
+                    onChange={(date, e) => {
+                        if (e && typeof e.preventDefault === 'function') {
+                            e.preventDefault();
+                        }
+                        if (date) {
+                            setStartDate(date);
+                            navigate(format_link_to_date(date))
+                        }
+                    }}
+                />
+        </label>);
 }
 
 function HeaderString({date}: { date: Date }) {
@@ -144,7 +168,7 @@ function HeaderString({date}: { date: Date }) {
 }
 
 export function PharmacyCard(props: PharmacyCardProps) {
-    let {date} = useParams();
+    const {date} = useParams();
     let is_home_page = true;
     if (date) {
         is_home_page = false;
@@ -154,9 +178,6 @@ export function PharmacyCard(props: PharmacyCardProps) {
     if (date_parsed.getHours() < 8 && is_home_page) {
         date_parsed = sub(date_parsed, {days: 1})
     }
-
-    const previous = format_link_to_date(sub(date_parsed, {days: 1}));
-    const next = format_link_to_date(add(date_parsed, {days: 1}));
 
     return (<ThemeProvider theme={theme}>
             <Card sx={{maxWidth: 400, boxShadow: 10, margin: "auto auto"}}>
@@ -184,7 +205,7 @@ export function PharmacyCard(props: PharmacyCardProps) {
                 </CardContent>
                 <Box sx={{display: 'flex', justifyContent: "space-between", pl: 1, pb: 1}}>
                     <Previous date={date_parsed}/>
-                    <Today date={date_parsed} is_home_page={is_home_page}/>
+                    <Calendar date={date_parsed}/>
                     <Next date={date_parsed}/>
                 </Box>
             </Card>
