@@ -7,6 +7,5 @@ Backend part is made in Rust.
 
 It should looks like this:
 
-<img width="287" alt="zrzut" src="https://user-images.githubusercontent.com/6102580/152982677-290f836a-a5f4-4983-98b9-7cac1befb99d.png">
 
-
+![image](https://user-images.githubusercontent.com/6102580/212773164-6e0ee08b-78dc-4c63-b886-eae2b84dcb96.png)
