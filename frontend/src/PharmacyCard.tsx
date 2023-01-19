@@ -48,13 +48,36 @@ const theme = createTheme({
     typography: {
         "fontFamily": "Vertigo", "fontWeightBold": "bold"
     }
+
 })
 
-function generate_date_string(some_date: Date): string {
-    let days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
-    let months = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
+theme.typography.body1 = {
+    "fontFamily": "Vertigo",
+    "fontSize": "small",
+}
 
-    const prefix = `${days[some_date.getDay()]}, `;
+enum Case {
+    Nominative ,
+    Accusative = 1,
+    Genitive
+}
+
+function get_day_name(some_date: Date, declension: Case) {
+    const index = some_date.getDay()
+    let days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
+    if (declension === Case.Accusative) {
+        days = ["w niedzielę", "w poniedziałek", "we wtorek", "w środę", "w czwartek", "w piątek", "w sobotę"];
+    }
+    else if (declension === Case.Genitive) {
+        days = ["do niedzieli", "do poniedziałku", "do wtorku", "do środy", "do czwartku", "do piątku", "do soboty"];
+    }
+    return days[index];
+}
+
+function generate_date_string(some_date: Date): string {
+    const months = ["stycznia", "lutego", "marca", "kwietnia", "maja", "czerwca", "lipca", "sierpnia", "września", "października", "listopada", "grudnia"];
+
+    const prefix = `${get_day_name(some_date, Case.Nominative)}, `;
 
     return `${prefix}${some_date.getDate()} ${months[some_date.getMonth()]} ${some_date.getFullYear()}`;
 }
@@ -140,21 +163,24 @@ function Calendar({date}: { date: Date }) {
                         }
                         if (date) {
                             setStartDate(date);
-                            navigate(format_link_to_date(date))
+                            navigate(format_link_to_date(date));
                         }
                     }}
                 />
         </label>);
 }
 
-function HeaderString({date}: { date: Date }) {
+function HeaderString({date, is_homepage}: { date: Date, is_homepage: boolean }) {
     let message = "";
     const suffix = "dyżur w Strzelinie"
 
-    if (isYesterday(date)) {
+    if (is_homepage) {
+        message = `Teraz ${suffix} pełni: `;
+    }
+    else if (isYesterday(date)) {
         message = `Wczoraj ${suffix} pełniła: `;
     } else if (isToday(date)) {
-        message = `Dzisiaj ${suffix} pełni: `;
+        message = `Dzisiaj ${suffix} będzie pełnić: `;
     } else if (isTomorrow(date)) {
         message = `Jutro ${suffix} pełni: `;
     } else if (isPast(date)) {
@@ -191,7 +217,7 @@ export function PharmacyCard(props: PharmacyCardProps) {
                 />
                 <CardContent>
                     <Typography component={'span'} variant="body2" color="red">
-                        <HeaderString date={date_parsed}/>
+                        <HeaderString date={date_parsed} is_homepage={is_home_page}/>
                     </Typography>
                     <Typography gutterBottom variant="h5" component="div">
                         {props.name}
@@ -202,6 +228,12 @@ export function PharmacyCard(props: PharmacyCardProps) {
                     <Typography variant="body2" color="text.secondary">
                         {props.phone}
                     </Typography>
+                    <div  className={styles.info_text}>
+                        <Typography variant="body1" color="text.secondary" >
+                                Pamiętaj! Apteka rozpoczyna swój dyżur {get_day_name(date_parsed, Case.Accusative)} o godzinie 8:00 i jej
+                                dyżur trwa {get_day_name(add(date_parsed, {days: 1}), Case.Genitive)} do 8:00
+                        </Typography>
+                    </div>
                 </CardContent>
                 <Box sx={{display: 'flex', justifyContent: "space-between", pl: 1, pb: 1}}>
                     <Previous date={date_parsed}/>

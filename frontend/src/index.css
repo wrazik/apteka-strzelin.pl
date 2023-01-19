@@ -22,7 +22,7 @@ footer {
     font-size: 0.75rem;
     font-weight: bold;
     background: black;
-    padding: 1rem;
+    padding: 0.5rem;
     color: white;
     position: fixed;
     text-align: center;
@@ -44,12 +44,18 @@ a:hover {
     text-decoration: underline;
 }
 
+.email {
+    display: inline-block;
+}
 
 .email::before {
     content: attr(user) "\0040";
 }
 .email::after {
     content: attr(domain);
+}
+.year {
+    display: inline-block;
 }
 
 @font-face {
