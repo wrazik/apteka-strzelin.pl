@@ -7,20 +7,20 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
-import { load_pharmacy} from "./PharmacyLoader";
+//import { load_pharmacy} from "./PharmacyLoader";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App></App>,
         errorElement: <ErrorPage />,
-        loader: load_pharmacy
+//        loader: load_pharmacy
     },
     {
         path: "/date/:date",
         element: <App></App>,
         errorElement: <ErrorPage />,
-        loader: load_pharmacy
+//        loader: load_pharmacy
     },
 ]);
 

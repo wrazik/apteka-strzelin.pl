@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -107,14 +108,14 @@ function is_this_years_date(date: Date) {
 
 function NextArrow() {
     return (<IconButton aria-label="Później" size='small'>
-            <ChevronRight/>
-        </IconButton>);
+        <ChevronRight/>
+    </IconButton>);
 }
 
 function PreviousArrow() {
     return (<IconButton aria-label="Wcześniej" size='small'>
-            <ChevronLeft/>
-        </IconButton>);
+        <ChevronLeft/>
+    </IconButton>);
 }
 
 function Next({date}: { date: Date }) {
@@ -122,14 +123,14 @@ function Next({date}: { date: Date }) {
     const link = format_link_to_date(tomorrow);
     if (is_this_years_date(tomorrow)) {
         return (<div>
-                <Link to={link}>
-                    <NextArrow/>
-                </Link>
-            </div>);
+            <Link to={link}>
+                <NextArrow/>
+            </Link>
+        </div>);
     } else {
         return (<div className="disabled">
-                <NextArrow/>
-            </div>)
+            <NextArrow/>
+        </div>)
     }
 }
 
@@ -138,14 +139,14 @@ function Previous({date}: { date: Date }) {
     const link = format_link_to_date(yesterday);
     if (is_this_years_date(yesterday)) {
         return (<div>
-                <Link to={link}>
-                    <PreviousArrow/>
-                </Link>
-            </div>);
+            <Link to={link}>
+                <PreviousArrow/>
+            </Link>
+        </div>);
     } else {
         return (<div className="disabled">
-                <PreviousArrow/>
-            </div>)
+            <PreviousArrow/>
+        </div>)
     }
 }
 
@@ -156,25 +157,25 @@ function Calendar({date}: { date: Date }) {
     const [startDate, setStartDate] = useState(date);
     return (
         <label>
-                <CalendarMonth/>
-                <DatePicker
-                    todayButton="Dzisiaj"
-                    className={styles.calendar_input}
-                    locale="pl"
-                    selected={startDate}
-                    minDate={parse_date("2024-01-01")}
-                    maxDate={parse_date("2024-12-31")}
-                    shouldCloseOnSelect={true}
-                    onChange={(date, e) => {
-                        if (e && typeof e.preventDefault === 'function') {
-                            e.preventDefault();
-                        }
-                        if (date) {
-                            setStartDate(date);
-                            navigate(format_link_to_date(date));
-                        }
-                    }}
-                />
+            <CalendarMonth/>
+            <DatePicker
+                todayButton="Dzisiaj"
+                className={styles.calendar_input}
+                locale="pl"
+                selected={startDate}
+                minDate={parse_date("2024-01-01")}
+                maxDate={parse_date("2024-12-31")}
+                shouldCloseOnSelect={true}
+                onChange={(date, e) => {
+                    if (e && typeof e.preventDefault === 'function') {
+                        e.preventDefault();
+                    }
+                    if (date) {
+                        setStartDate(date);
+                        navigate(format_link_to_date(date));
+                    }
+                }}
+            />
         </label>);
 }
 
@@ -214,40 +215,40 @@ export function PharmacyCard(props: PharmacyCardProps) {
     }
 
     return (<ThemeProvider theme={theme}>
-            <Card sx={{maxWidth: 400, boxShadow: 10, margin: "auto auto"}}>
-                <CardHeader subheader={generate_date_string(date_parsed)}
-                />
-                <CardMedia
-                    component="img"
-                    image={name_to_img[props.name]}
-                    title={"Aktualnie dyżur w Strzelinie pełni " + props.name}
-                    alt={"Aktualnie dyżurująca apteka w Strzelinie to " + props.name}
-                />
-                <CardContent>
-                    <Typography component={'span'} variant="body2" color="red">
-                        <HeaderString date={date_parsed} is_homepage={is_home_page}/>
+        <Card sx={{maxWidth: 400, boxShadow: 10, margin: "auto auto"}}>
+            <CardHeader subheader={generate_date_string(date_parsed)}
+            />
+            <CardMedia
+                component="img"
+                image={name_to_img[props.name]}
+                title={"Aktualnie dyżur w Strzelinie pełni " + props.name}
+                alt={"Aktualnie dyżurująca apteka w Strzelinie to " + props.name}
+            />
+            <CardContent>
+                <Typography component={'span'} variant="body2" color="red">
+                    <HeaderString date={date_parsed} is_homepage={is_home_page}/>
+                </Typography>
+                <Typography gutterBottom variant="h5" component="div">
+                    {props.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {props.address}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {props.phone}
+                </Typography>
+                <div  className={styles.info_text}>
+                    <Typography variant="body1" color="text.secondary" >
+                        Pamiętaj! Apteka rozpoczyna swój dyżur {get_day_name(date_parsed, Case.Accusative)} o godzinie {get_begin_hour(date_parsed)} i jej
+                        dyżur trwa {get_day_name(date_parsed, Case.Genitive)} do 22:00.
                     </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {props.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {props.address}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                        {props.phone}
-                    </Typography>
-                    <div  className={styles.info_text}>
-                        <Typography variant="body1" color="text.secondary" >
-                                Pamiętaj! Apteka rozpoczyna swój dyżur {get_day_name(date_parsed, Case.Accusative)} o godzinie {get_begin_hour(date_parsed)} i jej
-                                dyżur trwa {get_day_name(date_parsed, Case.Genitive)} do 22:00.
-                        </Typography>
-                    </div>
-                </CardContent>
-                <Box sx={{display: 'flex', justifyContent: "space-between", pl: 1, pb: 1}}>
-                    <Previous date={date_parsed}/>
-                    <Calendar date={date_parsed}/>
-                    <Next date={date_parsed}/>
-                </Box>
-            </Card>
-        </ThemeProvider>);
+                </div>
+            </CardContent>
+            <Box sx={{display: 'flex', justifyContent: "space-between", pl: 1, pb: 1}}>
+                <Previous date={date_parsed}/>
+                <Calendar date={date_parsed}/>
+                <Next date={date_parsed}/>
+            </Box>
+        </Card>
+    </ThemeProvider>);
 }

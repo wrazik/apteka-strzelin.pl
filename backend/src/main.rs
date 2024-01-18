@@ -6,8 +6,8 @@ use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer};
 use chrono::prelude::*;
 use chrono::Days;
 use database::Db;
-use openssl::ssl::{SslAcceptor, SslFiletype, SslMethod};
 use std::sync::RwLock;
+use actix_files as af;
 
 async fn pharmacy(req: HttpRequest) -> HttpResponse {
     println!("Received request for pharmacy");
@@ -33,7 +33,7 @@ async fn pharmacy(req: HttpRequest) -> HttpResponse {
         let calendar = req
             .app_data::<web::Data<RwLock<Calendar>>>()
             .expect("Test data missing in request handler.");
-        let pharmacy = calendar.read().unwrap().get_pharmacy(naive_date).unwrap();
+        let pharmacy = calendar.read().expect("Cannot read the calendar").get_pharmacy(naive_date).expect("Missing date");
         println!("Found pharmacy: {}", pharmacy.name);
         HttpResponse::Ok().json(pharmacy)
     } else {
@@ -49,26 +49,19 @@ async fn main() -> std::io::Result<()> {
     let calendar = RwLock::new(calendar);
     let calendar = web::Data::new(calendar);
 
-//    let mut builder = SslAcceptor::mozilla_intermediate(SslMethod::tls()).unwrap();
-//    builder
-//        .set_private_key_file("key.pem", SslFiletype::PEM)
-//        .unwrap();
-//    builder.set_certificate_chain_file("cert.pem").unwrap();
-
     if let Err(e) = HttpServer::new(move || {
-        let cors = Cors::permissive();
-//        let cors = Cors::default()
-//            .allowed_origin("https://apteka-strzelin.pl")
-//            .allowed_origin("https://www.apteka-strzelin.pl")
-//            .allowed_methods(vec!["GET"])
-//            .max_age(3600);
+        //let cors = Cors::default()
+        //    .allowed_origin("https://apteka-strzelin.pl")
+        //    .allowed_origin("https://www.apteka-strzelin.pl")
+        //    .allowed_methods(vec!["GET"])
+        //    .max_age(3600);
         App::new()
-            .wrap(cors)
             .app_data(calendar.clone())
-            .route("/pharmacy", web::get().to(pharmacy))
-            .route("/pharmacy/{naive_date}", web::get().to(pharmacy))
+            .route("/api/pharmacy", web::get().to(pharmacy))
+            .route("/api/pharmacy/{naive_date}", web::get().to(pharmacy))
+            .service(af::Files::new("/", "./public").index_file("index.html"))
+        //    .wrap(cors)
     })
-//    .bind_openssl("0.0.0.0:8081", builder)?
     .bind("0.0.0.0:8081")?
     .run()
     .await

@@ -12,7 +12,7 @@ export default function ErrorPage() {
     return (
         <div id="error-page" className={styles.error_page}>
             <div>
-                <img src={images.error_404}  className={styles.error_image} alt="Nie znaleziono strony"/>
+                <img src={images.error_404}   className={styles.error_image} alt="Nie znaleziono strony"/>
             </div>
             <div className={styles.text}> Internauto i internautko </div>
             <div className={styles.text}> Nic tu nie ma </div>

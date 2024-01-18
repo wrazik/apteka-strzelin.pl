@@ -52,7 +52,7 @@ impl From<Db> for Calendar {
 
 impl Calendar {
     fn string_to_date(date: &str) -> Option<NaiveDate> {
-        let date = date.to_owned() + ".2023";
+        let date = date.to_owned() + ".2024";
         NaiveDate::parse_from_str(&date, "%d.%m.%Y").ok()
     }
 
@@ -79,24 +79,24 @@ mod test {
     fn test_parsing_correct_date() {
         assert_eq!(
             Calendar::string_to_date("07.01").unwrap(),
-            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+            NaiveDate::from_ymd_opt(2024, 1, 7).unwrap()
         );
         assert_eq!(
             Calendar::string_to_date("7.1").unwrap(),
-            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+            NaiveDate::from_ymd_opt(2024, 1, 7).unwrap()
         );
         assert_eq!(
             Calendar::string_to_date("7.01").unwrap(),
-            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+            NaiveDate::from_ymd_opt(2024, 1, 7).unwrap()
         );
         assert_eq!(
             Calendar::string_to_date("7.01").unwrap(),
-            NaiveDate::from_ymd_opt(2023, 1, 7).unwrap()
+            NaiveDate::from_ymd_opt(2024, 1, 7).unwrap()
         );
     }
     #[test]
     fn test_parsing_incorrect_date() {
-        let correct = vec!["7.13", "piecgwiazdektrzygwiazdki", "29.2", "21.37"];
+        let correct = vec!["7.13", "piecgwiazdektrzygwiazdki", "30.2", "21.37"];
         let converted = correct
             .iter()
             .map(|x| Calendar::string_to_date(x))
