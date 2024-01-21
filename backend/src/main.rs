@@ -1,7 +1,6 @@
 mod database;
 
 use crate::database::Calendar;
-use actix_cors::Cors;
 use actix_web::{web, App, HttpRequest, HttpResponse, HttpServer};
 use chrono::prelude::*;
 use chrono::Days;
@@ -48,19 +47,15 @@ async fn main() -> std::io::Result<()> {
     let calendar: Calendar = db.into();
     let calendar = RwLock::new(calendar);
     let calendar = web::Data::new(calendar);
+    let port_nb = 8080;
+    let ip = "0.0.0.0";
 
     if let Err(e) = HttpServer::new(move || {
-        //let cors = Cors::default()
-        //    .allowed_origin("https://apteka-strzelin.pl")
-        //    .allowed_origin("https://www.apteka-strzelin.pl")
-        //    .allowed_methods(vec!["GET"])
-        //    .max_age(3600);
         App::new()
             .app_data(calendar.clone())
             .route("/api/pharmacy", web::get().to(pharmacy))
             .route("/api/pharmacy/{naive_date}", web::get().to(pharmacy))
             .service(af::Files::new("/", "./public").index_file("index.html"))
-        //    .wrap(cors)
     })
     .bind("0.0.0.0:8080")?
     .run()
