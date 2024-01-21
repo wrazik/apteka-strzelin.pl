@@ -14,5 +14,6 @@ FROM debian:bookworm-slim
 COPY --from=rust-builder /usr/local/cargo/bin/backend /app/backend
 COPY --from=rust-builder /app/src/apteka-strzelin/backend/db.json /app/db.json
 COPY --from=react-builder /app/src/apteka-strzelin/frontend/build /app/public
+COPY --from=react-builder /app/src/apteka-strzelin/frontend/public/manifest.json /app/public
 WORKDIR /app
 CMD ["./backend"]
