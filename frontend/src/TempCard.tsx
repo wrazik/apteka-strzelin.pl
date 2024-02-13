@@ -50,16 +50,18 @@ export function TempCard() {
                 </Typography>
                 <Typography gutterBottom variant="body1" component="div" marginTop="2rem">
                     <b>Najbliższe dyżury: </b><br/>
-                    03.02: Pod Paprocią (rynek) <br/>
-                    04.02: Pod Złotym Lwem (rondo) <br/>
-                    05.02: Nova (koło Artura) <br/>
-                    06.02: Kalina (koło Tony) <br/>
-                    07.02: Pod paprocią (rynek) <br/>
-                    08.02: Pod Złotym Lwem (rondo) <br/>
-                    09.02: Inter Apteka (Carrefour) <br/>
-                    10.02: Centrum Zdrowia (bielany) <br/>
-                    11.02: Pod Paprocią (rynek) <br/>
                     12.02: Pod Złotym Lwem (rondo) <br/>
+                    13.02: Nova (koło Artura) <br/>
+                    14.02: Kalina (koło Tony) <br/>
+                    15.02: Pod paprocią (rynek) <br/>
+                    16.02: Pod Złotym Lwem (rondo) <br/>
+                    17.02: Inter Apteka (Carrefour) <br/>
+                    18.02: Centrum Zdrowia (bielany) <br/>
+                    19.02: Pod Paprocią (rynek) <br/>
+                    20.02: Pod Złotym Lwem (rondo) <br/>
+                    21.02: Nova (koło Artura) <br/>
+                    22.02: Kalina (koło Tony) <br/>
+                    23.02: Pod paprocią (rynek) <br/>
                 </Typography>
             </CardContent>
         </Card>
