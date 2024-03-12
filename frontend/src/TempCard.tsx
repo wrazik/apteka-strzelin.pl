@@ -42,7 +42,7 @@ enum Case {
 export function TempCard() {
     return (<ThemeProvider theme={theme}>
         <Card sx={{maxWidth: 400, boxShadow: 10, margin: "auto auto"}}>
-            <CardHeader subheader="Strona w przebudowie! Wkrótce wrócimy z nową wersją strony." />
+            <CardHeader subheader="Strona w przebudowie! Już niedługo nowa wersja" />
             <CardContent>
                 <Typography component={'span'} variant="body2" color="red" marginBottom="0.5rem">
                     Uwaga! Wszystkie apteki w Strzelinie są zamknięte w godzinach 22:00-8:00 (w niedzielę do 10:00).
@@ -50,15 +50,14 @@ export function TempCard() {
                 </Typography>
                 <Typography gutterBottom variant="body1" component="div" marginTop="2rem">
                     <b>Najbliższe dyżury: </b><br/>
-                    11.03: Pod Złotym Lwem (rondo) <br/>
-                    12.03: Inter Apteka (Carrefour) <br/>
-                    13.03: Centrum Zdrowia (bielany) <br/>
-                    14.03: Pod Paprocią (rynek) <br/>
-                    15.03: Pod Złotym Lwem (rondo) <br/>
-                    16.03: Nova (koło Artura) <br/>
-                    17.03: Kalina (koło Tony) <br/>
-                    18.03: Pod paprocią (rynek) <br/>
-                    18.03: Pod Złotym Lwem (rondo) <br/>
+                    10.04: Pod paprocią (rynek) <br/>
+                    11.04: Pod paprocią (rynek) <br/>
+                    12.04: Kalina (koło Tony) <br/>
+                    13.04: Inter Apteka (Carrefour) <br/>
+                    14.04: Pod paprocią (rynek) <br/>
+                    15.04: Pod paprocią (rynek) <br/>
+                    16.04: Inter Apteka (Carrefour) <br/>
+                    17.04: Inter Apteka (Carrefour) <br/>
                 </Typography>
             </CardContent>
         </Card>
