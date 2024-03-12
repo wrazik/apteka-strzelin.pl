@@ -50,15 +50,13 @@ export function TempCard() {
                 </Typography>
                 <Typography gutterBottom variant="body1" component="div" marginTop="2rem">
                     <b>Najbliższe dyżury: </b><br/>
-                    11.03: Pod Złotym Lwem (rondo) <br/>
-                    12.03: Inter Apteka (Carrefour) <br/>
-                    13.03: Centrum Zdrowia (bielany) <br/>
-                    14.03: Pod Paprocią (rynek) <br/>
-                    15.03: Pod Złotym Lwem (rondo) <br/>
-                    16.03: Nova (koło Artura) <br/>
-                    17.03: Kalina (koło Tony) <br/>
-                    18.03: Pod paprocią (rynek) <br/>
-                    18.03: Pod Złotym Lwem (rondo) <br/>
+                    26.03: Pod paprocią (rynek) <br/>
+                    27.03: Pod Złotym Lwem (rondo) <br/>
+                    28.03: Inter Apteka (Carrefour) <br/>
+                    29.03: Pod Złotym Lwem <br/>
+                    30.03: Kalina (koło Tony) <br/>
+                    31.03: Centrum Zdrowia (bielany) <br/>
+                    01.04: BRAK INFORMACJI OD GMINY
                 </Typography>
             </CardContent>
         </Card>
