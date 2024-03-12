@@ -45,20 +45,20 @@ export function TempCard() {
             <CardHeader subheader="Strona w przebudowie! Wkrótce wrócimy z nową wersją strony." />
             <CardContent>
                 <Typography component={'span'} variant="body2" color="red" marginBottom="0.5rem">
-                    Uwaga! Wszystkie apteki w Strzelinie są zamknięte w godzinach 22:00-8:00 (w niedzielę do 10:00). Wynika to z nowego sposobu finansowania dyżurowania aptek przez NFZ.
-                    POWIAT MOŻE FINANSOWAĆ NOCNE DYŻURY APTEK! <br/> Jeśli potrzebujesz pomocy, zadzwoń na numer 112.
+                    Uwaga! Wszystkie apteki w Strzelinie są zamknięte w godzinach 22:00-8:00 (w niedzielę do 10:00).
+                    Jeśli potrzebujesz pomocy, zadzwoń na numer 112.
                 </Typography>
                 <Typography gutterBottom variant="body1" component="div" marginTop="2rem">
                     <b>Najbliższe dyżury: </b><br/>
-                    03.03: Pod Złotym Lwem (rondo) <br/>
-                    04.03: Inter Apteka (Carrefour) <br/>
-                    05.03: Centrum Zdrowia (bielany) <br/>
-                    06.03: Pod Paprocią (rynek) <br/>
-                    07.03: Pod Złotym Lwem (rondo) <br/>
-                    08.03: Nova (koło Artura) <br/>
-                    09.03: Kalina (koło Tony) <br/>
-                    10.03: Pod paprocią (rynek) <br/>
                     11.03: Pod Złotym Lwem (rondo) <br/>
+                    12.03: Inter Apteka (Carrefour) <br/>
+                    13.03: Centrum Zdrowia (bielany) <br/>
+                    14.03: Pod Paprocią (rynek) <br/>
+                    15.03: Pod Złotym Lwem (rondo) <br/>
+                    16.03: Nova (koło Artura) <br/>
+                    17.03: Kalina (koło Tony) <br/>
+                    18.03: Pod paprocią (rynek) <br/>
+                    18.03: Pod Złotym Lwem (rondo) <br/>
                 </Typography>
             </CardContent>
         </Card>
